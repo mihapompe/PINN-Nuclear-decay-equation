@@ -1,0 +1,21 @@
+The decay equation (\ref{eq:decay_eq}) is the mathematical model describing abundances and activities in a decay chain as a function of time
+\begin{equation}\label{eq:decay_eq}
+    \frac{d\mathbf{N}(t)}{dt} = A * \mathbf{N}(t) \,,
+\end{equation}
+where $\mathbf{N}(t) \in \mathbb{R}^n$ is a vector who's components are the populations of the $n$ isotopes at the time $t$ and $A \in \mathbb{R}^{n \times n}$ is a matrix who's elements are the decay constants.\\
+It is in our interest to solve this equation to predict what the populations of each isotope will be at a certain given time. For instance, this is something we are interested in when we want to store some spent fuel. To do it so safely we need to know the precise abundance of each element so that we can calculate their activities and avoid overheating and unexpected new chain reactions.
+
+The problem with this equation is that in the general case there is no analytical solution and we need to use some approximation method.
+At the moment the most used methods are three:
+\begin{itemize}
+    \centering
+    \item CRAM,
+    \item Padel,
+    \item RungeKutta.
+\end{itemize}
+However, they all have some limitations.\\
+\textit{CRAM} is the current state-of-the-art method and can solve any problem with almost no error (in the order of $10^{-8}$) as long as the eigenvalues of the A matrix are all on the real negative axis. But, the more the eigenvalues have also a complex component the less the method becomes reliable.\\
+\textit{Padel} can solve all the problems, with both real and complex eigenvalues, however, starts to fail when the stiffness of the matrix becomes significant.\\
+Lastly, \textit{Runge-Kutta} can make correct predictions both in the case of real or complex eigenvalues and also for stiff matrices as long as the time steps are reduced enough. However, increasing the number of time steps used makes the method extremely slow and inefficient.
+
+To solve these limitations our approach will be to solve the decay equation using a \textit{Physics Informed Neural Network} (from now on PINN). The idea is that the network will learn how to solve the problem directly from the equation, so having real or imaginary numbers will not be a problem. Furthermore, the training of the network might take more than solving the problem with CRAM, but since we will be interested in doing uncertainty quantification, we will need to solve the equation many times (around 1000 times), each time with a small perturbation in the A matrix. To achieve this we can use transfer learning and retrain the network on the new problem reducing significantly the time needed for the entire process.

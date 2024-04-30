@@ -1,0 +1,58 @@
+The decay equation \ref{eq:decay_eq} gives us as a function of time the abundance and activities of different isotopes that decay over time.
+This is a 1st order differential equation (ODE), where we can read the abundance of each isotope at every time t from the vector $\mathbf{N}(t)$ where each component of its n component is the population of one of the n isotopes. The activity of each element is given by the $n \times n$ matrix A. Its elements are real but the eigenvalues con be both real and immaginary. When the eigenvalues are real they indicate the rate of spontaneous nuclear decay. Instead, when they are imaginary they indicate the rate of the neutron capture. This process can happen when we are considering material in a nuclear reactor where there are free neutrons that can be captured by some nucleus.
+
+In the general case, there is no analytical solution for this equation. However, to be able to judge the quality of our results, we will consider a special case where the solution is known.
+We will from now on consider the case where we have a linear nuclear chain and the eigenvalues are all real, that is a chain where each element can decay in only one other element and there are no positive feedback loops (neutron captures):
+\begin{equation}\label{decay_chain}
+     A \xrightarrow{\lambda_{A}} B \xrightarrow{\lambda_{B}} C \, ,
+\end{equation}
+where $A, B \text{ and } C$ are three isotopes.\\
+With this assumption, our A matrix will be diagonalizable, lower triangular and real.\\
+We can formulate the problem as follow:
+\begin{align}
+    \frac{dN_{1}}{dt} &= - \lambda_{1} N_{1} \,,\\
+    \frac{dN_{i}}{dt} &= \lambda_{i-1} N_{i-1} - \lambda_{i} N_{i} \,,\qquad (i=2,...,n) \,.
+\end{align}
+Assuming zero concentrations of all daughters at time 
+zero
+\begin{equation}
+    N_{1}(0) \neq 0 \quad \text{and} \quad N_{i}(0) = 0 \,,\quad \forall i > 0 \,,
+\end{equation}
+we have the following solution found by Bateman in 1910
+% \begin{equation*}
+%     N_{n}(t) = \frac{N_{1}(0)}{\lambda_{n}} \sum_{i=0}^{n} \lambda_{i}\alpha_{i}e^{-\lambda_{i}t} \qquad \text{where} \qquad \alpha_{i} = \prod_{j=i\\ j \neq i}^{n}
+%  \frac{\lambda_{j}}{(\lambda_{j} - \lambda{i})}
+% \end{equation*}
+\begin{equation}
+    N_{n}(t) = \frac{N_{1}(0)}{\lambda_{n}} \sum_{i=0}^{n} \lambda_{i}\alpha_{i}e^{-\lambda_{i}t}\,,
+\end{equation}
+where
+\begin{equation}
+    \alpha_{i} = \prod_{j=i\\ j \neq i}^{n} \frac{\lambda_{j}}{(\lambda_{j} - \lambda{i})}\,.
+\end{equation}
+
+To simplify even more our analysis we will consider the decay equation in the case of 3 isotopes, so our chain of decay will be of the type \ref{decay_chain}, implying the following A matrix:
+\begin{equation}\label{eq:A_matrix}
+    A = \begin{pmatrix}
+            -\lambda_1 & 0 & 0\\
+            \lambda_1 & -\lambda_2 & 0\\
+            0 & \lambda_2 & 0
+        \end{pmatrix} \,.
+\end{equation}
+In this special case, the problem \ref{eq:decay_eq} can be formulated as:
+\begin{equation}
+    \begin{cases}
+        \frac{dN_1(t)}{dt} = -\lambda_1 N_1(t)\\
+        \frac{dN_2(t)}{dt} = \lambda_1 N_1(t) -\lambda_2 N_2(t)\\
+        \frac{dN_3(t)}{dt} = \lambda_2 N_2(t)\,.
+    \end{cases}
+\end{equation}
+The following result will be referred to in the code as \textit{Analytical}.
+
+\begin{equation}\label{eq:analytical_sol}
+    \begin{cases}
+        N_1(t) = N_1(0)e^{-\lambda_1 t}\\
+        N_2(t) = N_1(0) \frac{\lambda_1}{\lambda_2 - \lambda_1} (e^{-\lambda_1 t} - e^{-\lambda_2 t})\\
+        N_3(t) = N_1(0) (\frac{\lambda_1}{\lambda_2 - \lambda_1}e^{-\lambda_2 t} - \frac{\lambda_2}{\lambda_2 - \lambda_1}e^{-\lambda_1 t} )\,.
+    \end{cases}
+\end{equation}

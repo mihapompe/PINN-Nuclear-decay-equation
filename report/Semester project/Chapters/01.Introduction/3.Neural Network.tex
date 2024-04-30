@@ -1,0 +1,14 @@
+A neural network (NNs) often referred to as an artificial neural network (ANNs) is the core part of deep learning algorithms. ANNs are comprised of nodes (\textit{neurons}) and \textit{layers}. There are three types of layers, the input layer, the output and one or more hidden layers. The neurons are what form each layer. They are interconnected and each connection has an associated weight. Each one of them can be thought of as a linear regression model.
+
+In the context of this thesis, we will consider a specific subset of NNs, the feed-forward neural network. Their characteristic is that the output of one node becomes the input of the next one.\\
+Mathematically speaking we can see a feed-forward network as a function $\Phi : \mathbb{R}^{n} \rightarrow \mathbb{R}^{m}$. If $z_0 \in \mathbb{R}^n$ is the input to the network then we define recursively
+\begin{equation}\label{eq:NeuralNetwork}
+    z_{i+1} = \sigma (W_i z_i + b_i)\,, \quad \text{where } 0 \leq i < L\,,
+\end{equation}
+and the output $z_{L+1} = W_Lz_L + b_L \in \mathbb{R}^m$. Importantly, $W_i$ are called the \textit{weights} and are matrices, $b_i$ are called the \textit{biases} and are vectors, and $\sigma$ is the \textit{activation function} acting on each component individually. Choosing $\sigma$ as a non-linear function allows us to have non-linearity. We combine these elements to get the parameters that live in a high-dimensional parameter space $\theta \coloneqq (W_i, b_i)_{i=o}^{L} \in \Theta$.
+
+What in literature is referred to as training is the process shown in figure \ref . This corresponds to the research on the optimal parameters in $\Theta$. The core of the training is the boxes \textit{calculate loss} and \textit{update weights} in figure \ref .\\
+The loss is a non-negative real function that measures the prediction accuracy of the NNs. In case we have the exact solution, $\Phi$ matching $F$, the loss will be zero, in any other case it will be greater than zero.
+The method that the NNs use to find the best parameters in $\Theta$ is using gradient descent. This is what is done in each loop shown in figure \ref, each of these loops is called an epoch. We then perform as many epochs as are needed such that either the loss is zero or we are below a certain threshold.
+
+As proven in \ref we know that as long as we give enough parameters to the network, for any continuous function $F$ there exists an NNs $\Phi$ that approximates $F$ to an arbitrary degree in the $L^{\infty}$. This is known as the universal approximation theorem.

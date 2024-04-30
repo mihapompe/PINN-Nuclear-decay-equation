@@ -1,0 +1,7 @@
+compile_refs.py
+*.aux
+*.bbl
+*.blg
+*.dvi
+*.log
+main.pdf

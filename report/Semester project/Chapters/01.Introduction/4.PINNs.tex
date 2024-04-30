@@ -1,0 +1,18 @@
+Physics-informed neural networks (PINNs) are a type of universal function approximators that can embed the knowledge of any physical laws that govern a given data set in the learning process. The advantage of this method is to overcome the low data availability (or even the absence of data) on the system.
+
+In this thesis, we will use a PINN to solve an ODE without providing any training data. The capability of PINNs in solving this task has been shown in this paper \ref{Justin's thesis}.\\
+The goal of our network will be to solve equation (\ref{eq:decay_eq}), which means to predict the populations $\mathbf{N}(t)\,\,\forall t$. To fully understand how our PINN works, the differences and the advantage compared to a classical NNs, let us first consider the case where we assume to know the analytical solution to equation (\ref{eq:decay_eq}). In this case, we can do supervised NNs where we compare the predictions of the NNs with the analytical solution. Naming $\Phi$ our network, this will be a function $\Phi : \mathbb{R}^{1} \rightarrow \mathbb{R}^{m}$ where the input will be the time $t \in \mathbb{R}^{1}$ and the output $\Phi(t) \in \mathbb{R}^{m}$ will the populations of the m isotopes we are considering at that time t. Assuming $\mathbf{M}$ to the exact solution to equation (\ref{eq:decay_eq}): $\mathbf{N}(t)=\mathbf{M}$, we would have the following loss function:
+\begin{equation}
+    \mathcal{L} = \parallel \Phi(t) - \mathbf{M} \parallel^{2}_{2} \,.
+\end{equation}
+However, as explained in section \ref, in the general case we do not have the analytical solution.\\
+With this in mind, we now move to the actual problem. The core idea of method used is to make the network solve itself the equation (\ref{eq:decay_eq}). To do this let's first rewrite the equation,
+\begin{equation}\label{eq:decay_eq_inverse}
+    \frac{d\mathbf{N}(t)}{dt} - A * \mathbf{N}(t) = 0 \,,
+\end{equation}
+so that we can minimize it.
+Since we can compute the derivative of the network's output $\Phi(t)$, namely $\dot{\Phi}$, we now substitute $\mathbf{N}(t)$ in eqaution (\ref{eq:decay_eq_inverse}), which is what we want to calculate, with $\Phi(t)$, which is what the network computes. In this way we are requiering that what the PINN is computing is the solution to our equation. As we want this to be equal to zero we can use this as our loss function
+\begin{equation}\label{eq:loss_function}
+    \mathcal{L} = \parallel \dot{\Phi}(t) - A *  \Phi(t) \parallel^{2}_{2} \,.
+\end{equation}
+What we are doing is evaluating the network at a given time $t$ and asking that the outcome fulfils the decay equation.
