@@ -40,7 +40,7 @@ However, upon closer examination of the problem (1), it seems that there might e
 
 It is known [3] that if A has n distinct real eigenvalues, the solution to (1) is the linear combination
 
-$N(t) = \sum_{i=1}^n a_i e^{λ_it}$,
+$N(t) = \Sigma_{i=1}^n a_i e^{λ_it}$,
 
 where $a_i \in R^n$ and $\{\lambda_i\}$ are the eigenvalues of $A$. This solution can be reformulated as a neural network with a hidden layer of n neurons, an activation function $\sigma(x) = e^x$, and known weights of the first layer $w = (\lambda_1, \lambda_2, ..., \lambda_n)$. I.e. the solution can be written as
 
@@ -51,7 +51,7 @@ This network architecture has the advantage that only n2 parameters need to be l
 ### More complex matrices
 Having n distinct eigenvalues is ensured with probability 1, but having only real eigenvalues is not. If some eigenvalues are complex, the solution is
 
-$N(t)=\sum_{i=1}^n e^{Re(\lambda_i)t}cos(Im(\lambda_i)t)a_i +e^{Re(\lambda_i)t}sin(Im(\lambda_i)t)b_i$,
+$N(t)=\Sigma_{i=1}^n e^{Re(\lambda_i)t}cos(Im(\lambda_i)t)a_i +e^{Re(\lambda_i)t}sin(Im(\lambda_i)t)b_i$,
 
 with $a_i, b_i \in R^n$. This solution can also be represented as a neural network, with more neurons and a slightly different activation function.
 
@@ -188,14 +188,14 @@ Burnup matrix of size $43\times43$ with stiffness |A| = 3, 1 × 1011 was cropped
     |---|---|---|---|---|
     | Normal | / | 2.67% | 4.14% | |
     | Gradual increase | / | 2.11% | 3.29% | |
-    | Gradual increase | /$10^{10}$ | 2.42% | 3.68% | |
-    | Gradual increase | /$10^{12}$ | 2.44% | 3.78% | |
-    | Gradual increase | /$10^{14}$ | 0.11% | 0.24% | |
-    | Gradual increase | /$10^{15}$ | 0.018% | 0.037% | picture conc_and_error_over_time90 |
+    | Gradual increase | / $10^{10}$ | 2.42% | 3.68% | |
+    | Gradual increase | / $10^{12}$ | 2.44% | 3.78% | |
+    | Gradual increase | / $10^{14}$ | 0.11% | 0.24% | |
+    | Gradual increase | / $10^{15}$ | 0.018% | 0.037% | picture conc_and_error_over_time90 |
     | Normal | /$10^{15}$ | 0.024% | 0.048% | picture conc_and_error_over_time91 |
-    | Gradual increase no dilution | /$10^{15}$ | 0.016% | 0.040% | |
-    | Slower gradual increase no dilution | /$10^{15}$ | 0.024% | 0.045% | |
-    | Slower gradual increase | /$10^{15}$ | 0.015% | 0.035% | |
+    | Gradual increase no dilution | / $10^{15}$ | 0.016% | 0.040% | |
+    | Slower gradual increase no dilution | / $10^{15}$ | 0.024% | 0.045% | |
+    | Slower gradual increase | / $10^{15}$ | 0.015% | 0.035% | |
     | Slower gradual increase | 50 | 0.007% | 0.010% | conc_and_error_over_time92 |
     | Slower gradual increase | 5 | 0.0034% | 0.0028% | |
     | Slower gradual increase no dilution | 5 | 0.0048% | 0.0041% | |
@@ -203,8 +203,8 @@ Burnup matrix of size $43\times43$ with stiffness |A| = 3, 1 × 1011 was cropped
     | Slower gradual increase | 5 with positivity loss | 0.0046% | 0.0029% | conc_and_error_over_time93 |
     | Slower gradual increase | 5 with positivity loss x10 | 0.0054% | 0.0037% | |
     | Slower gradual increase | 1 | 0.0009% | 0.0011% | conc_and_error_over_time94 |
-    | Slower gradual increase | /$10^{16}$ | 0.13% | 0.23% | With 100x100 matrix, stiffness $10^{18}$, picture 101, loss $10^{-5}$|
-    | Slower gradual increase | /$10^{16}$ | 54% | 63% | With 500x500 matrix, stiffness $10^{24}$, loss $10^{-10}$, 38 min|
+    | Slower gradual increase | / $10^{16}$ | 0.13% | 0.23% | With 100x100 matrix, stiffness $10^{18}$, picture 101, loss $10^{-5}$|
+    | Slower gradual increase | / $10^{16}$ | 54% | 63% | With 500x500 matrix, stiffness $10^{24}$, loss $10^{-10}$, 38 min|
     
     Gradual increase means that given a training time interval [0, t_max] we slowly increase t_max, the number of data points is increasing. If it says no dilution it means that we always have the same number of data points, but still increase t_max with every epoch. The latter one is about 10% to 20% slower due to more training points.
 
@@ -271,7 +271,7 @@ Burnup matrix of size $43\times43$ with stiffness |A| = 3, 1 × 1011 was cropped
     **RESULT**: We still have a dependence on the weight ratio. With the same weight ratio the original loss function performed better than the new one.
 - Perform a more broad and dense hyperparameter search
 
-    **RESULT**: We found that it's best to initialize $w_{IC}/w_{ODE} = 5\times stiffness$.
+    **RESULT**: We found that it's best to initialize $w_{IC}/w_{ODE} = 5\times$ stiffness.
 
 ![result3](results/weight_vs_eigen.png)
 
