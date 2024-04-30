@@ -1,6 +1,6 @@
 # Physics informed neural networks (PINN) with a mathematically informed architecture for the nuclear decay equation
 
-Semester project of Miha Pompe with the goal to develop a novel mathematically informed architecture of a PINN to solve the nuclear decay equation. All the details and results are also published in ```PINN_presentation.pdf``` and ```PINN_report.pdf```.
+Semester project of Miha Pompe with the goal to develop a novel mathematically informed architecture of a PINN to solve the nuclear decay equation. All the details and results are also published in ```PINN_presentation.pdf```, ```PINN_report.pdf``` and the projects ```Wiki```.
 
 Currently, the algorithm can solve problems with stiffness up to $10^{19}$ and up to any size (tested up to 500). Some results for test cases:
 | Matrix size | Stiffness | Relative error | Relative final error |
